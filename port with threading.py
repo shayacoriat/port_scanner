@@ -17,7 +17,7 @@ amount = int(sys.argv[2])
 q = Queue()
 
 
-
+# create socket and attempt to connect 
 def scan(port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     socket.setdefaulttimeout(.3)
@@ -25,12 +25,12 @@ def scan(port):
     if result == 0:
         print("port {} is open".format(port))
 
-
+# hold range of ports to be scanned in a queue
 def ports():
     for port in range(amount):
         q.put(port)
 
-
+# access one port at a time so theads don't overlap
 def worker():
     while not q.empty():
         port = q.get()
